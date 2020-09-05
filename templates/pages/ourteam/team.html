@@ -1,0 +1,31 @@
+{% extends 'sousbase.html' %}
+{% load static %}
+{% block title %}{{ team.team_name }}{% endblock title %}
+
+{% block sousbase %}
+<div class="container team my-5">
+  <div class="row">
+    <div class="sidebar col-md-4">
+      <img src="{{team.team_image.url}}" class="team-img" alt="{{ team.team_name }}">
+      <div class="team-sociaux p-4">
+          <a href="{{ team.team_facebook }}" target="_blank"><i class="fa fa-facebook-official fa-2x" aria-hidden="true"></i></i></a>
+          <a href="{{ team.team_twitter }}" target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>
+          <a href="{{ team.team_linkedIn }}" target="_blank"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a>
+          <a href="{{ team.team_instagram }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+          <a href="{{ team.team_youtube }}" target="_blank"><i class="fa fa-youtube fa-2x" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="team-content col-md-8">
+        <div class="team-name">{{ team.team_name }}</div>
+
+        <div class="team-designation">{{ team.team_designation }}</div>
+
+        <div class="team-text">{{ team.team_description }}</div>
+
+        <div class="team-created">Mis à jour le {{ team.team_created_date }}</div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock sousbase %}

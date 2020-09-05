@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Acceuil {% endblock title %}
+
+{% block content %}
+
+    <div class="hero">
+        <div class="header">
+            <img src="{% static 'img/logo-transparent.png' %}" class="logo" alt="Entreprise Solutions">
+            {% with request.resolver_match.url_name as url_name %}
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle auth" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <svg width="5em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        {% if request.user.is_authenticated %}
+                            <a class="dropdown-item {% if url_name == 'app:home' %}active{% endif %}" href="#">Tableau de bord</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item {% if url_name == 'logout' %}active{% endif %}" href="{% url 'logout' %}">Déconnexion</a>
+                        {% else %}
+                            <a class="dropdown-item {% if url_name == 'login' %}active{% endif %}" href="{% url 'login' %}">Connexion</a>
+                            <a class="dropdown-item {% if url_name == 'register' %}active{% endif %}" href="{% url 'register' %}">Inscription</a>
+                        {% endif %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item {% if url_name == 'contact' %}active{% endif %}" href="{% url 'app:contact' %}">Contact</a>
+                        <a class="dropdown-item {% if url_name == 'about' %}active{% endif %}" href="{% url 'ourteam:about' %}">
+                            A Propos de Nous!
+                        </a>
+                    </div>
+                </div>
+            {% endwith %}
+        </div>
+        <div class="content">
+            <h4>
+                Bienvenue sur 
+                <br> <span class="entreprise">Entreprise</span> <span class="particulier">Solutions</span>  
+                <br> Trouvez ce dont vous avez besoin
+            </h4>
+
+            <button type="button" class="btn-content"><a href="{% url 'entreprise:entreprise_home'%} ">Entreprise</a></button>
+            <button type="button" class="btn-content"><a href="{% url 'app:home'%} ">Particulier</a></button>
+        </div>
+ 
+        <div class="bubbles">
+            <img src="{% static 'img/bubble.png' %}" class="logo" alt="Entreprise Solutions">
+            <img src="{% static 'img/bubble.png' %}" class="logo" alt="Entreprise Solutions">
+            <img src="{% static 'img/bubble.png' %}" class="logo" alt="Entreprise Solutions">
+            <img src="{% static 'img/bubble.png' %}" class="logo" alt="Entreprise Solutions">
+            <img src="{% static 'img/bubble.png' %}" class="logo" alt="Entreprise Solutions">
+            <img src="{% static 'img/bubble.png' %}" class="logo" alt="Entreprise Solutions">
+            <img src="{% static 'img/bubble.png' %}" class="logo" alt="Entreprise Solutions">
+        </div>
+
+        <!-- <div class="bottom-bar">
+            <img src="{% static 'img/menu.png' %}" class="menu" alt="Entreprise Solutions">
+            <div class="social-links">
+                <img src="{% static 'img/fb.png' %}" alt="Entreprise Solutions">
+                <img src="{% static 'img/ig.png' %}" alt="Entreprise Solutions">
+                <img src="{% static 'img/tw.png' %}" alt="Entreprise Solutions">
+            </div>
+            <div class="useful-links">
+                <img src="{% static 'img/share.png' %}" alt="Entreprise Solutions">
+                <img src="{% static 'img/info.png' %}" alt="Entreprise Solutions">
+            </div>
+        </div> -->
+    </div>
+
+{% endblock content %}
