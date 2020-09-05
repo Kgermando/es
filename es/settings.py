@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '96q^w)fu4yw6d_&$u*n-o3l-$dp*nq_q*tvg_73+mum2^s+j1g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*', '192.168.1.179']
+ALLOWED_HOSTS = ['142.93.178.37', '192.168.1.179', '*']
 
 
 # Application definition
@@ -79,12 +79,24 @@ WSGI_APPLICATION = 'es.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG == True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'entreprisesolutions',
+            'USER': 'entreprisesolutions',
+            'PASSWORD': 'gk0813530838',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
 
 
 # Password validation
@@ -131,10 +143,30 @@ MESSAGE_TAGS = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+if DEBUG == True:
+    STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATIC_ROOT = os.path.join(BASE_DIR, "static-root")
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+    STATIC_ROOT = os.path.join(BASE_DIR, "static-root")
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media-root')
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media-root')
+    
+else:
+    AWS_ACCESS_KEY_ID = '6ENUK64BPFCJTZPQTAO5'
+    AWS_SECRET_ACCESS_KEY = 'P5rdkJRh4d+KOeRAGGRSxjthz+melq41TB+M8NLOGcQ'
+    AWS_STORAGE_BUCKET_NAME = 'entreprisesolutions-spaces'
+    AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+    AWS_LOCATION = 'entreprisesolutions-spaces-static'
+
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
+    STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
