@@ -5,7 +5,7 @@
 
 {% block content %}
 
-    <div class="hero">
+    <div class="hero" style="background-image: url({% static 'img/background.png' %})">
         <div class="header">
             <img src="{% static 'img/logo-transparent.png' %}" class="logo" alt="Entreprise Solutions">
             {% with request.resolver_match.url_name as url_name %}
